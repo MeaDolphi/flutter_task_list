@@ -8,14 +8,14 @@ import 'models/project.dart';
 import 'models/task.dart';
 
 class HiveProvider {
-  static void addProject(ProjectModel project) {
+  static void addProject(ProjectModel project) async {
     Box<dynamic> box = Hive.box("projectsBox");
     box.put(box.length, project);
   }
 
-  static void updateProject(int index, ProjectModel project) {
+  static void updateProject(int index, ProjectModel project) async {
     Box<dynamic> box = Hive.box("projectsBox");
-    box.put(index, project);
+    await box.put(index, project);
   }
 
   static ProjectModel getProject(int index) {
@@ -29,14 +29,14 @@ class HiveProvider {
     return box.length;
   }
 
-  static void deleteProject(int index) {
+  static void deleteProject(int index) async {
     Box<dynamic> box = Hive.box("projectsBox");
-    box.delete(index);
+    await box.delete(index);
   }
 
-  static void clearProjects() {
+  static void clearProjects() async {
     Box<dynamic> box = Hive.box("projectsBox");
-    box.clear();
+    await box.clear();
   }
 
   static List<TaskModel> getTasks() {

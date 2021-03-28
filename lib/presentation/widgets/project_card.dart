@@ -29,14 +29,8 @@ class _ProjectCard extends State<ProjectCard> {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        showModalBottomSheet(
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.vertical(top: Radius.circular(16)),
-          ),
-          backgroundColor: backgroundColor,
-          barrierColor: Color.fromARGB(0, 0, 0, 0),
-          context: context,
-          builder: (BuildContext context) {
+        Scaffold.of(context).showBottomSheet(
+          (context) {
             return BottomSheetProjectInfo(widget.model);
           }
         );
@@ -124,14 +118,8 @@ class _ProjectCard extends State<ProjectCard> {
                         Flexible(
                           child: GestureDetector(
                             onTap: () {
-                              showModalBottomSheet(
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.vertical(top: Radius.circular(16)),
-                                ),
-                                backgroundColor: backgroundColor,
-                                barrierColor: Color.fromARGB(0, 0, 0, 0),
-                                context: context,
-                                builder: (BuildContext context) {
+                              Scaffold.of(context).showBottomSheet(
+                                (context) {
                                   return BottomSheetTaskInfo(widget.model.listTasks[index], widget.model.date);
                                 }
                               );

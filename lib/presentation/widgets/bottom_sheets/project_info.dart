@@ -32,13 +32,33 @@ class BottomSheetProjectInfo extends StatefulWidget {
 }
 
 class _BottomSheetProjectInfo extends State<BottomSheetProjectInfo> {
+  FocusNode _textProjectNameNode;
+  FocusNode _textTaskNameNode;
+
+  @override
+  void initState() {
+    super.initState();
+
+    _textProjectNameNode = FocusNode();
+    _textTaskNameNode = FocusNode();
+  }
+
+  @override
+  void dispose() {
+    _textProjectNameNode.dispose();
+    _textTaskNameNode.dispose();
+
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     final Color _colorButton = HexColor.fromHex(widget._project.color).green > HexColor.fromHex(widget._project.color).blue ? Colors.black26 : Colors.deepOrange;
 
     return GestureDetector(
       onTap: () {
-        FocusScope.of(context).unfocus();
+        _textProjectNameNode.unfocus();
+        _textTaskNameNode.unfocus();
       },
       child: Container(
         width: MediaQuery.of(context).size.width,
@@ -113,6 +133,7 @@ class _BottomSheetProjectInfo extends State<BottomSheetProjectInfo> {
               ),
               TextFormField(
                 controller: widget._textProjectNameController,
+                focusNode: _textProjectNameNode,
                 cursorColor: Colors.grey,
                 enableSuggestions: false,
                 style: TextStyle(
@@ -168,6 +189,7 @@ class _BottomSheetProjectInfo extends State<BottomSheetProjectInfo> {
                         child: TextFormField(
                           key: widget._textTaskNameKey,
                           controller: widget._textTaskNameController,
+                          focusNode: _textTaskNameNode,
                           cursorColor: Colors.grey,
                           enableSuggestions: false,
                           style: TextStyle(
@@ -259,17 +281,11 @@ class _BottomSheetProjectInfo extends State<BottomSheetProjectInfo> {
                       height: 40,
                       child: GestureDetector(
                         onTap: () {
-                          showModalBottomSheet(
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.vertical(top: Radius.circular(16)),
-                            ),
-                            backgroundColor: backgroundColor,
-                            barrierColor: Color.fromARGB(0, 0, 0, 0),
-                            context: context,
-                            builder: (BuildContext context) {
+                          Scaffold.of(context).showBottomSheet(
+                            (context) {
                               return BottomSheetTaskInfo(widget._project.listTasks[index], widget._project.date);
                             }
-                          ); //
+                          );
                         },
                         child: Row(
                           children: [

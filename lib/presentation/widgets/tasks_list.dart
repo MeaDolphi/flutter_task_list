@@ -111,14 +111,8 @@ class _TasksListWidget extends State<TasksListWidget> {
                       Flexible(
                         child: GestureDetector(
                           onTap: () {
-                            showModalBottomSheet(
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.vertical(top: Radius.circular(16)),
-                              ),
-                              backgroundColor: backgroundColor,
-                              barrierColor: Color.fromARGB(0, 0, 0, 0),
-                              context: context,
-                              builder: (BuildContext context) {
+                            Scaffold.of(context).showBottomSheet(
+                              (context) {
                                 return BottomSheetTaskInfo(_listTasks[index], widget._selectedDate);
                               }
                             );

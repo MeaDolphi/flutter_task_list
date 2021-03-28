@@ -35,13 +35,33 @@ class BottomSheetProjectCreate extends StatefulWidget {
 }
 
 class _BottomSheetProjectCreate extends State<BottomSheetProjectCreate> {
+  FocusNode _textProjectNameNode;
+  FocusNode _textTaskNameNode;
+
+  @override
+  void initState() {
+    super.initState();
+
+    _textProjectNameNode = FocusNode();
+    _textTaskNameNode = FocusNode();
+  }
+
+  @override
+  void dispose() {
+    _textProjectNameNode.dispose();
+    _textTaskNameNode.dispose();
+
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     final Color _colorButton = widget._colorProject.green > widget._colorProject.blue ? Colors.black26 : Colors.deepOrange;
 
     return GestureDetector(
       onTap: () {
-        FocusScope.of(context).unfocus();
+        _textProjectNameNode.unfocus();
+        _textTaskNameNode.unfocus();
       },
       child: Container(
         width: MediaQuery.of(context).size.width,
@@ -120,6 +140,7 @@ class _BottomSheetProjectCreate extends State<BottomSheetProjectCreate> {
                 height: 20,
               ),
               TextFormField(
+                focusNode: _textProjectNameNode,
                 key: widget._textProjectNameKey,
                 controller: widget._textProjectNameController,
                 cursorColor: Colors.grey,
@@ -183,6 +204,7 @@ class _BottomSheetProjectCreate extends State<BottomSheetProjectCreate> {
                         width: MediaQuery.of(context).size.width/2,
                         child: TextFormField(
                           key: widget._textTaskNameKey,
+                          focusNode: _textTaskNameNode,
                           controller: widget._textTaskNameController,
                           cursorColor: Colors.grey,
                           enableSuggestions: false,

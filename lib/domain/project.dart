@@ -6,7 +6,7 @@ class ProjectDomain {
     int counterProjectsThisDay = 0;
 
     for (int i = 0; i < HiveProvider.getProjectLength(); i++) {
-      if (HiveProvider.getProject(i).date == thisDay) {
+      if (HiveProvider.getProject(i).date != null && HiveProvider.getProject(i).date == thisDay) {
         counterProjectsThisDay++;
       }
     }

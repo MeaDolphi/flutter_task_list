@@ -30,6 +30,25 @@ class BottomSheetTaskInfo extends StatefulWidget {
 }
 
 class _BottomSheetTaskInfo extends State<BottomSheetTaskInfo> {
+  FocusNode _textTaskNameNode;
+  FocusNode _textDetailNode;
+
+  @override
+  void initState() {
+    super.initState();
+
+    _textTaskNameNode = FocusNode();
+    _textDetailNode = FocusNode();
+  }
+
+  @override
+  void dispose() {
+    _textTaskNameNode.dispose();
+    _textDetailNode.dispose();
+
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     final ProjectModel _project = HiveProvider.getProject(widget._task.projectIndex);
@@ -45,7 +64,8 @@ class _BottomSheetTaskInfo extends State<BottomSheetTaskInfo> {
 
     return GestureDetector(
       onTap: () {
-        FocusScope.of(context).unfocus();
+        _textTaskNameNode.unfocus();
+        _textDetailNode.unfocus();
       },
       child: Container(
         width: MediaQuery.of(context).size.width,
@@ -139,6 +159,7 @@ class _BottomSheetTaskInfo extends State<BottomSheetTaskInfo> {
                 ),
                 TextFormField(
                   controller: widget._textTaskNameController,
+                  focusNode: _textTaskNameNode,
                   cursorColor: Colors.grey,
                   enableSuggestions: false,
                   style: TextStyle(
@@ -340,7 +361,10 @@ class _BottomSheetTaskInfo extends State<BottomSheetTaskInfo> {
                     ),
                     GestureDetector(
                       onTap: () {
-                        FocusScope.of(context).unfocus();
+                        if (FocusScope.of(context).hasFocus) {
+                          FocusScope.of(context).unfocus();
+                        }
+
                         if (widget._textDetailController.value.text.length > 0) {
                           setState(() {
                             widget._task.detail = widget._textDetailController.value.text;
@@ -375,6 +399,7 @@ class _BottomSheetTaskInfo extends State<BottomSheetTaskInfo> {
                     children: [
                       TextFormField(
                         controller: widget._textDetailController,
+                        focusNode: _textDetailNode,
                         cursorColor: Colors.grey,
                         enableSuggestions: false,
                         style: TextStyle(

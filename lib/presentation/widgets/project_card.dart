@@ -49,14 +49,19 @@ class _ProjectCard extends State<ProjectCard> {
           children: [
             Row(
               children: [
-                Text(
-                  widget.model.title,
-                  style: TextStyle(
-                    fontFamily: "NotoSans",
-                    fontSize: 24,
-                    fontWeight: FontWeight.w800,
-                    color: Colors.white,
-                  ),
+                Flexible(
+                  child: RichText(
+                    overflow: TextOverflow.ellipsis,
+                    text: TextSpan(
+                      text: widget.model.title,
+                      style: TextStyle(
+                        fontFamily: "NotoSans",
+                        fontSize: 24,
+                        fontWeight: FontWeight.w800,
+                        color: Colors.white,
+                      ),
+                    )
+                  )
                 )
               ],
             ),
